@@ -1,5 +1,7 @@
 package com.example.springauthenticateendpoint.service;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,14 +18,18 @@ public class CustomUserDetailsService implements UserDetailsService{
 	private UserRepository userRepo;
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		System.out.println("LoadByUsrName");
-		User user  = userRepo.findByUsername(username);
-		System.out.println("User "+user.getFirstName());
+		if(userRepo.findByUsername(username) == null) 
+		{
+			throw new  UsernameNotFoundException("User with username "+username+" doesn't exists");
+		}
+		User user = userRepo.findByUsername(username);
+				
 		CustomUserDetails customUser = null;
 		customUser = new CustomUserDetails();
 		customUser.setUser(user);
-		System.out.println("User "+customUser.getUsername());
-		return customUser;		
+	
+		return customUser;
+		
 	}
 
 }

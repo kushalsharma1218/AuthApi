@@ -3,6 +3,7 @@ package com.example.springauthenticateendpoint.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,8 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.springauthenticateendpoint.model.User;
 import com.example.springauthenticateendpoint.repository.UserRepository;
 
+
+//HospitalAdminWork
+
 @RestController
-@RequestMapping("/secure/auth")
+@RequestMapping("/v1/auth")
 public class AdminController {
 
 	
@@ -23,8 +27,10 @@ public class AdminController {
 	
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
+	
 
-	@PostMapping("/admin/newpatient")
+	@PreAuthorize("hasRole('ADMIN')")
+	@PostMapping("/admin/newuser")
 	public String addUserByAdmin(@RequestBody User patient) 
 	{
 		String pass = patient.getPassword();
@@ -35,9 +41,8 @@ public class AdminController {
 		return "Patient added successfully";
 	}	
 	
-	@PreAuthorize("hasAnyRole('ADMIN')")
-	@GetMapping("/admin/all")
-	public String securedHello() {
-		return "Secured Hello";
-	}
+	
+	
+	
+
 }

@@ -21,6 +21,7 @@ public class User {
 	
 	private String firstName;
 	private String lastName;
+	private String emailId;
 	private String username;
 	private String phone;
 	private String password;
@@ -42,12 +43,7 @@ public class User {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	public String getEmailId() {
-		return username;
-	}
-	public void setEmailId(String emailId) {
-		this.username = emailId;
-	}
+
 	public String getFirstName() {
 		return firstName;
 	}
@@ -71,6 +67,12 @@ public class User {
 	}
 	public void setUsername(String username) {
 		this.username = username;
+	}
+	public String getEmailId() {
+		return emailId;
+	}
+	public void setEmailId(String emailId) {
+		this.emailId = emailId;
 	}
 	
 }
