@@ -1,0 +1,12 @@
+.background
+{
+  padding: 0;
+  width: 100%;
+  float: left;
+  height: 50%;
+  background-image: url('C:\Users\kushal\eHealth\src\assets\images\adminbackground.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 50%;
+  border:1px solid black;
+}

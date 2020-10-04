@@ -1,0 +1,54 @@
+<div class="background_img">
+
+<h1 style="font: bold; font-weight: bold; font-family: 'Courier New', Courier, monospace;
+    vertical-align: middle; font-size: 50px; margin-top: 100px; margin-left: 60px;
+">WELCOME TO EHEALTH!</h1>
+</div>
+<div class="login-page">
+  <mat-card class="mat-elevation-z12">
+    <mat-card-title style="text-align:center;">Login</mat-card-title>
+
+          <mat-card-content>
+            <form  [formGroup]="form" #LoginInformation (ngSubmit)="Login(LoginInformation)" class="text-center">
+              <mat-form-field>
+                <input
+                  matInput
+                  placeholder="Username"
+				  type="text"  class="form-control" formControlName="username"
+				  >
+
+                <mat-icon matSuffix>account_circle</mat-icon>
+              </mat-form-field>
+              <mat-form-field>
+                <input
+                  matInput
+                  placeholder="Password"
+                  type="password"
+                  required
+                  minlength="8"
+                  name="password"
+
+				  class="form-control" formControlName="password"
+				  >
+                <mat-icon matSuffix>lock</mat-icon>
+              </mat-form-field>
+
+              <button
+                mat-raised-button
+                color="primary"
+                class="login-button"
+				      type = "submit"
+				>
+                Sign In
+              </button>
+
+
+            </form>
+            <button
+            mat-raised-button
+            class="login-button" (click) = 'Register()'>
+            Register
+          </button>
+          </mat-card-content>
+  </mat-card>
+</div>
