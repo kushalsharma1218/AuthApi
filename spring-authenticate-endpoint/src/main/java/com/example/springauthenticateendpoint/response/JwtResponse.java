@@ -1,31 +1,29 @@
 package com.example.springauthenticateendpoint.response;
 
-import java.util.List;
+import java.util.Set;
+
+import com.example.springauthenticateendpoint.model.Role;
 
 public class JwtResponse {
 	private String token;
 	private String type = "Bearer ";
 	private int id;
+	private String firstName;
+	private String lastName;
 	private String username;
 	private String email;
-	private List<String> roles;
+	private String roles;
 	
 	
-	public JwtResponse(String accessToken, int id,String username, String email, List<String> roles) 
+	public JwtResponse(String accessToken, int id,String firstName,String lastName,String username, String email, String roles) 
 	{
 		this.token = accessToken;
 		this.id = id;
 		this.username = username;
 		this.email = email;
 		this.roles = roles;
-	}
-
-	public JwtResponse(String accessToken, String username, String email) 
-	{
-		this.token = accessToken;
-		this.username = username;
-		this.email = email;
-		
+		this.firstName = firstName;
+		this.lastName = lastName;
 	}
 
 
@@ -79,13 +77,33 @@ public class JwtResponse {
 	}
 
 
-	public List<String> getRoles() {
+	public String getRoles() {
 		return roles;
 	}
 
 
-	public void setRoles(List<String> roles) {
+	public void setRoles(String roles) {
 		this.roles = roles;
+	}
+
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+
+	public String getLastName() {
+		return lastName;
+	}
+
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 	
 	

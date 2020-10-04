@@ -1,14 +1,20 @@
 package com.example.springauthenticateendpoint.controller;
 
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.web.server.SecurityWebFiltersOrder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -50,7 +56,13 @@ public class ApplicationController {
 	
 	  @PostMapping("/authenticate")
 	    public ResponseEntity<?> generateToken(@RequestBody AuthRequest authRequest) throws Exception {
-	        try {
+		  User user = userRepo.findByUsername(authRequest.getUsername());
+	        if(user == null) 
+	        {
+	        	  return ResponseEntity.ok(new MessageResponse("Username doesn't exists"));
+	        }
+	        else {
+	        	try {
 	        	
 	            authentication.authenticate(
 	                    new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword())
@@ -59,11 +71,17 @@ public class ApplicationController {
 	            return ResponseEntity.ok(new MessageResponse("invalid username or password"));
 	        }
 	        
-	        User user = userRepo.findByUsername(authRequest.getUsername());
 	        String jwtToken = jwtUtil.generateToken(authRequest.getUsername());
+	        Role role = null;
+	        Iterator<Role> it = user.getRoles().iterator();
+	        while(it.hasNext())
+	        {
+	        	role = it.next();
+	        }
 	        
-	        return ResponseEntity.ok(new JwtResponse(jwtToken,authRequest.getUsername(), user.getEmailId()));
-	    }
+	        return ResponseEntity.ok(new JwtResponse(jwtToken,user.getId(),user.getFirstName(),user.getLastName(),authRequest.getUsername(), user.getEmailId(),role.getRole()));
+	        }
+	  }
 	  
 		@PostMapping("/register")
 		public ResponseEntity<?> addNewPatient(@RequestBody User patient) 
@@ -88,6 +106,22 @@ public class ApplicationController {
 			return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
 			}
 		}
+		
+		@CrossOrigin(origins = "*")
+		@PreAuthorize("hasRole('ADMIN')")
+		@GetMapping("/admin/getAllUsers")
+		public List<User> findAll()
+		{
+			return userRepo.findAll();
+		}
+		
+//		@RequestMapping(value="/logout")
+//		void logoutPage() {   
+//	        if (auth != null){      
+//	           new SecurityContextLogoutHandler().logout(request, response, authentication);  
+//	        }  
+//	         return "";  
+//	     }  
 		
 		
 		

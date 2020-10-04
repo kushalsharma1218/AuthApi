@@ -1,5 +1,7 @@
 package com.example.springauthenticateendpoint.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -41,8 +43,6 @@ public class AdminController {
 		return "Patient added successfully";
 	}	
 	
-	
-	
-	
+
 
 }

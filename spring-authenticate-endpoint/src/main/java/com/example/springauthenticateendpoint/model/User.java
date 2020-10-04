@@ -25,6 +25,7 @@ public class User {
 	private String username;
 	private String phone;
 	private String password;
+	private String govermentId;
 	
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	//Separate table and connect user and role
@@ -74,5 +75,18 @@ public class User {
 	public void setEmailId(String emailId) {
 		this.emailId = emailId;
 	}
+	public String getGovermentId() {
+		return govermentId;
+	}
+	public void setGovermentId(String govermentId) {
+		this.govermentId = govermentId;
+	}
+	public int getId() {
+		return Id;
+	}
+	public void setId(int id) {
+		Id = id;
+	}
+	
 	
 }
