@@ -35,7 +35,7 @@ export class SignupComponent implements OnInit {
 
   }
 
-  AdminForm(AdminInformation)
+  AdminForm()
   {
      let pass = this.Password.value;
      let confirmPass = this.ConfirmPassword.value;

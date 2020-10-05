@@ -16,7 +16,7 @@ import { AdminService } from '../services/admin.service';
 })
 export class LoginComponent implements OnInit {
 
-  private tokenService = new TokenStorageService;
+  private tokenService = new TokenStorageService();
   private adminDetail = new AdminDetail();
   private response = new Response();
   constructor(private adminService: AdminService, private router: Router) { }
@@ -24,22 +24,29 @@ export class LoginComponent implements OnInit {
   ngOnInit(){
     if(this.tokenService.getToken())
     {
+      if(this.tokenService.getUser().roles == 'ADMIN')
+      {
+        this.router.navigate(['hospital-admin', this.tokenService.getToken()]);
+      }
+      else{
       this.router.navigate(['profile', this.tokenService.getToken()]);
-
     }
+  }
   }
 
   // create the form object.
-  form = new FormGroup({
-    username : new FormControl('' , Validators.required),
-    password : new FormControl('' , Validators.required)
+    form = new FormGroup({
+      username : new FormControl('' , Validators.required),
+      password : new FormControl('' , Validators.required)
   });
 
   Login(LoginInformation)
   {
+
       this.adminDetail.username = this.Username.value;
       this.adminDetail.password = this.Password.value;
-
+      if(this.adminDetail.username == '' || this.adminDetail.password== ''){ alert('Please enter details');}
+else{
       let resp = this.adminService.login(this.adminDetail);
       resp.subscribe(
         data => {
@@ -65,6 +72,7 @@ export class LoginComponent implements OnInit {
           }
           }
       );
+        }
   }
 
   get Username(){

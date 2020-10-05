@@ -1,3 +1,5 @@
+import { DoctorDetail } from './../classes/doctor-detail';
+import { FormGroup } from '@angular/forms';
 import { TokenStorageService } from './token-storage.service';
 import { catchError } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -47,7 +49,7 @@ export class AdminService {
   logout()
   {
     this.tokenService.signOut();
-    this.router.navigate(['']);
+
   }
 
 getAllUsers(): Observable<any>
@@ -55,4 +57,8 @@ getAllUsers(): Observable<any>
     return this.http.get(this.baseUrl + 'admin/getAllUsers', httpOptions);
 }
 
+addDoctor(doctordetail : DoctorDetail): Observable<any>
+{
+  return this.http.post(this.baseUrl + 'addDoctor', doctordetail, httpOptions);
+}
 }

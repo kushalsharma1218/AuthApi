@@ -1,0 +1,159 @@
+<div class="add_member_background">
+  </div>
+<div class="add_member_page">
+  <mat-card class="mat-elevation-z12">
+    <mat-card-title style="text-align:center;"> ADD MEMBER </mat-card-title>
+        <mat-card-content>
+          <form
+          #f="ngForm"
+          [formGroup]="form" #AdminInformation (ngSubmit)="AdminForm()"
+          >
+
+			<!-- First Name -->
+			<mat-form-field>
+              <input
+                matInput
+                placeholder="First Name"
+                name="firstname"
+                minlength = "3"
+                maxlength = "20"
+                formControlName="firstName" class="form-control" type="text"
+              >
+              <mat-icon matSuffix>perm_identity</mat-icon>
+              <mat-error
+                *ngIf="FirstName.invalid">
+                First name is required
+              </mat-error>
+
+            </mat-form-field>
+			<!-- Last Name -->
+			<mat-form-field>
+              <input
+                matInput
+                placeholder="Last Name"
+                name="lastname"
+                formControlName="lastName" class="form-control" type="text"
+				>
+              <mat-icon matSuffix>perm_identity</mat-icon>
+              <mat-error
+                *ngIf="UserName.invalid">
+                Username is required
+               </mat-error>
+
+            </mat-form-field>
+
+			<!-- Email	 -->
+            <mat-form-field>
+              <input
+                matInput
+                placeholder="Email"
+                required
+                name="email"
+				        formControlName="email" class="form-control" type="email"
+                >
+                <mat-error *ngIf="Email.invalid">Email is required</mat-error>
+              <mat-icon matSuffix>email</mat-icon>
+            </mat-form-field>
+
+			<!-- Phone -->
+			<mat-form-field>
+              <input
+                matInput
+                placeholder="Contact"
+                required
+                name="phone"
+				        formControlName="phone" class="form-control" type="phone"
+                >
+                <mat-error *ngIf="Phone.invalid"> Phone is required</mat-error>
+              <mat-icon matSuffix>phone</mat-icon>
+            </mat-form-field>
+
+			<!-- Username -->
+			<mat-form-field>
+              <input
+                matInput
+                placeholder="Username"
+                required
+                name="username"
+				        formControlName="userName" class="form-control" type="text"
+                >
+                <mat-error *ngIf="UserName.invalid">Username is required</mat-error>
+              <mat-icon matSuffix>account_circle</mat-icon>
+            </mat-form-field>
+
+			<!-- Password -->
+            <mat-form-field>
+              <input
+                matInput
+                placeholder="Password"
+                type="password"
+                required
+                minlength="8"
+                name="password"
+				        formControlName="password" class="form-control" type="password"
+                >
+                <mat-error
+                  *ngIf="Password.errors && Password.errors.required">
+                  Password is required
+                </mat-error>
+                <mat-error
+                  *ngIf="Password.errors && Password.errors.minlength">
+                  Password must be of length 6
+                </mat-error>
+              <mat-icon matSuffix>lock</mat-icon>
+
+            </mat-form-field>
+            <mat-form-field>
+                <input
+                matInput
+                placeholder="Confirm Password"
+                type="password"
+                required
+                minlength="8"
+                name="repassword"
+                formControlName="confirmPassword" class="form-control" type="password"
+                >
+
+              <mat-icon matSuffix>lock</mat-icon>
+            </mat-form-field>
+
+            <!-- goverment id -->
+            <mat-form-field>
+              <input
+                matInput
+                placeholder="Aadhar number/Pan card/Passport"
+                required
+				        formControlName="goverment" class="form-control" type="text"
+                >
+              <mat-icon matSuffix>article</mat-icon>
+            </mat-form-field>
+            <mat-form-field>
+              <input
+                matInput
+                placeholder="Enter Role"
+                required
+				        formControlName="role" class="form-control" type="text"
+                >
+              <mat-icon matSuffix>face</mat-icon>
+            </mat-form-field>
+            <mat-form-field>
+              <input
+                matInput
+                placeholder="Enter speciality"
+                required
+				        formControlName="speciality" class="form-control" type="text"
+                >
+              <mat-icon matSuffix>work</mat-icon>
+            </mat-form-field>
+            <button
+              mat-raised-button
+              color="primary"
+              class="login-button">
+              ADD
+            </button>
+          </form>
+
+        </mat-card-content>
+
+  </mat-card>
+</div>

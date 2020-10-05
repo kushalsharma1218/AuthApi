@@ -2,7 +2,7 @@ package com.example.springauthenticateendpoint.response;
 
 import java.util.Set;
 
-import com.example.springauthenticateendpoint.model.Role;
+
 
 public class JwtResponse {
 	private String token;
@@ -105,10 +105,5 @@ public class JwtResponse {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	
-	
-	
-	
-	
 
 }

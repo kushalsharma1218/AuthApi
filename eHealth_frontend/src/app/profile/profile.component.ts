@@ -19,6 +19,8 @@ export class ProfileComponent implements OnInit {
   }
   public logout()
   {
+
     this.adminService.logout();
+
   }
 }

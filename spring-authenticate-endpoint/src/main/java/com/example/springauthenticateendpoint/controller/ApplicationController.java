@@ -22,8 +22,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.springauthenticateendpoint.model.AuthRequest;
-import com.example.springauthenticateendpoint.model.Role;
+import com.example.springauthenticateendpoint.model.Doctor;
 import com.example.springauthenticateendpoint.model.User;
+import com.example.springauthenticateendpoint.repository.DoctorRepository;
 import com.example.springauthenticateendpoint.repository.UserRepository;
 import com.example.springauthenticateendpoint.response.JwtResponse;
 import com.example.springauthenticateendpoint.response.MessageResponse;
@@ -43,6 +44,9 @@ public class ApplicationController {
 
 	@Autowired
 	private UserRepository userRepo;
+	
+	@Autowired
+	private DoctorRepository doctorRepo;
 	
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
@@ -72,14 +76,9 @@ public class ApplicationController {
 	        }
 	        
 	        String jwtToken = jwtUtil.generateToken(authRequest.getUsername());
-	        Role role = null;
-	        Iterator<Role> it = user.getRoles().iterator();
-	        while(it.hasNext())
-	        {
-	        	role = it.next();
-	        }
+	       
 	        
-	        return ResponseEntity.ok(new JwtResponse(jwtToken,user.getId(),user.getFirstName(),user.getLastName(),authRequest.getUsername(), user.getEmailId(),role.getRole()));
+	        return ResponseEntity.ok(new JwtResponse(jwtToken,user.getId(),user.getFirstName(),user.getLastName(),authRequest.getUsername(), user.getEmailId(),user.getRole()));
 	        }
 	  }
 	  
@@ -107,6 +106,43 @@ public class ApplicationController {
 			}
 		}
 		
+		@PostMapping("/addDoctor")
+		public ResponseEntity<?> addDoctor(@RequestBody Doctor doctor) 
+		{
+			if(userRepo.existsByUsername(doctor.getUsername())) 
+			{
+				return ResponseEntity
+						.ok()
+						.body(new MessageResponse("Error: Username is already taken!"));
+			}
+			else if(userRepo.existsByEmailId(doctor.getEmailId())) 
+			{
+				return ResponseEntity
+						.ok()
+						.body(new MessageResponse("Error: Email is already in use!"));
+			}
+			else {
+			String pass = doctor.getPassword();
+			String encryptPass = passwordEncoder.encode(pass);
+			doctor.setPassword(encryptPass);
+	
+			User user = new User();
+			user.setEmailId(doctor.getEmailId());
+			user.setUsername(doctor.getUsername());
+			user.setFirstName(doctor.getFirstName());
+			user.setGovermentId(doctor.getGovermentId());
+			user.setLastName(doctor.getLastName());
+			user.setPassword(doctor.getPassword());
+			user.setPhone(doctor.getPhone());
+			user.setRole(doctor.getRole());
+			userRepo.save(user);
+			
+			doctor.setId(user.getId());
+			doctorRepo.save(doctor);
+			return ResponseEntity.ok(new MessageResponse("Doctor registered successfully!"));
+			}
+		}
+		
 		@CrossOrigin(origins = "*")
 		@PreAuthorize("hasRole('ADMIN')")
 		@GetMapping("/admin/getAllUsers")
@@ -117,12 +153,12 @@ public class ApplicationController {
 		
 //		@RequestMapping(value="/logout")
 //		void logoutPage() {   
-//	        if (auth != null){      
+//	        if (authentication != null){      
 //	           new SecurityContextLogoutHandler().logout(request, response, authentication);  
 //	        }  
 //	         return "";  
-//	     }  
-		
+//	     }
+//		
 		
 		
 }

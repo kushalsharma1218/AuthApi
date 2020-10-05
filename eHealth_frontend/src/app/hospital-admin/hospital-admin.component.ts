@@ -22,7 +22,12 @@ export class HospitalAdminComponent implements OnInit {
 
     routeToAddMember()
     {
-      
+
       this.router.navigate(['addmember', this.tokenservice.getToken()]);
+    }
+
+    public logout()
+    {
+      this.adminService.logout();
     }
 }
